@@ -1,18 +1,17 @@
-# these are in chars, not tokens
-# should probably change to tokens later tho (512 token chunking + 5% overlap)
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("google/embeddinggemma-2")
+# in tokens
+CHUNK_SIZE = 512
+CHUNK_OVERLAP = 51
+
+text_splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
+    tokenizer=tokenizer,
+    chunk_size=CHUNK_SIZE,
+    chunk_overlap=CHUNK_OVERLAP,
+)
 
 # simple chunking function - change later to better chunking strategy
 def chunk_text(text: str) -> list[str]:
-    chunks = []
-    if len(text) <= CHUNK_SIZE:
-        return [text]
-        
-    start = 0
-    while start < len(text):
-        end = start + CHUNK_SIZE
-        chunks.append(text[start:end])
-        start += (CHUNK_SIZE - CHUNK_OVERLAP)
-        
-    return chunks
+    return text_splitter.split_text(text)
