@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+# stuff i added
+lancedb/
+#files/ --- for now ima keep dummy files in the repo but uncomment later
