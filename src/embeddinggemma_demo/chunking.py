@@ -12,6 +12,7 @@ text_splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
     chunk_overlap=CHUNK_OVERLAP,
 )
 
-# simple chunking function - change later to better chunking strategy
+# recursive character text splitting
+# --> uses hierarchy of separators to split text by for more semantically coherent chunking
 def chunk_text(text: str) -> list[str]:
     return text_splitter.split_text(text)
